@@ -1,0 +1,157 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+.user-details-page {
+	.back-button {
+		@include button-base;
+		background: none;
+		border: 1px solid #ddd;
+		color: #333;
+		margin-bottom: 1.5rem;
+
+		&:hover {
+			background-color: #f8f9fa;
+		}
+	}
+}
+
+.user-header {
+	background: white;
+	padding: 2rem;
+	border-radius: 12px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	display: flex;
+	align-items: center;
+	gap: 2rem;
+	margin-bottom: 2rem;
+
+	.user-avatar {
+		width: 80px;
+		height: 80px;
+		border-radius: 50%;
+		background-color: $primary-color;
+		color: white;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		font-size: 2rem;
+		font-weight: 600;
+	}
+
+	.user-basic-info {
+		flex: 1;
+
+		h1 {
+			margin: 0 0 0.5rem 0;
+			font-size: 1.5rem;
+			color: #333;
+		}
+
+		.user-id {
+			color: #666;
+			margin: 0;
+		}
+	}
+
+	.user-actions {
+		display: flex;
+		gap: 1rem;
+
+		button {
+			@include button-base;
+			
+			&.btn-blacklist {
+				background: none;
+				border: 1px solid #dc3545;
+				color: #dc3545;
+
+				&:hover {
+					background-color: #dc3545;
+					color: white;
+				}
+			}
+
+			&.btn-activate {
+				background: none;
+				border: 1px solid #28a745;
+				color: #28a745;
+
+				&:hover {
+					background-color: #28a745;
+					color: white;
+				}
+			}
+		}
+	}
+}
+
+.details-tabs {
+	background: white;
+	padding: 1rem 2rem;
+	border-radius: 12px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	display: flex;
+	gap: 2rem;
+	margin-bottom: 2rem;
+
+	.tab {
+		background: none;
+		border: none;
+		border-bottom: 2px solid transparent;
+		padding: 0.75rem 0;
+		color: #666;
+		font-weight: $font-weight-medium;
+		cursor: pointer;
+		@include transition(all);
+
+		&.active {
+			color: $primary-color;
+			border-bottom-color: $primary-color;
+		}
+
+		&:hover {
+			color: $primary-color;
+		}
+	}
+}
+
+.details-content {
+	.details-section {
+		background: white;
+		padding: 2rem;
+		border-radius: 12px;
+		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+		margin-bottom: 2rem;
+
+		h2 {
+			font-size: 1.25rem;
+			color: #333;
+			margin-bottom: 1.5rem;
+		}
+
+		.details-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			gap: 2rem 3rem;
+
+			.detail-item {
+				display: flex;
+				flex-direction: column;
+				gap: 0.5rem;
+
+				.label {
+					font-size: 0.875rem;
+					color: #666;
+					text-transform: uppercase;
+					letter-spacing: 0.5px;
+				}
+
+				.value {
+					font-size: 1rem;
+					color: #333;
+					font-weight: $font-weight-medium;
+				}
+			}
+		}
+	}
+}

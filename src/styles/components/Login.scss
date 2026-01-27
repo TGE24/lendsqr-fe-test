@@ -1,0 +1,164 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+.login-page {
+	width: 100%;
+	min-height: 100vh;
+	display: flex;
+	font-family: $font-family-login;
+
+	@include mobile {
+		flex-direction: column;
+	}
+}
+
+.login-left {
+	flex: 1;
+	background: #FBFBFB;
+	display: flex;
+	flex-direction: column;
+	@include flex-center;
+	padding-inline: 69px;
+	position: relative;
+
+	@include mobile {
+		display: none;
+		min-height: 200px;
+		padding: 2rem;
+	}
+
+	.login-logo {
+		max-width: 173.76px;
+		position: absolute;
+		top: 106px;
+		left: 97px;
+
+		@include mobile {
+			top: 1rem;
+			left: 1rem;
+		}
+	}
+	.login-illustration {
+		width: 100%;
+		max-width: 600px;
+		height: auto;
+		margin-bottom: 2rem;
+	}
+
+	.login-branding {
+		text-align: center;
+		color: white;
+
+		h2 {
+			font-size: 2.5rem;
+			margin-bottom: 0.5rem;
+			font-weight: 700;
+			color: white;
+		}
+
+		p {
+			font-size: 1.125rem;
+			opacity: 0.9;
+			margin: 0;
+		}
+	}
+}
+
+.login-right {
+	flex: 1;
+	background: white;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 3rem;
+
+	@include mobile {
+		padding: 2rem;
+	}
+}
+
+.login-container {
+	width: 100%;
+	max-width: 500px;
+
+	h1 {
+		font-size: 40px;
+		letter-spacing: $letter-spacing-tight;
+		font-weight: 700;
+		margin-bottom: 10px;
+		color: #213F7D;
+		line-height: 100%;
+	}
+
+	.login-subtitle {
+		color: #545F7D;
+		margin-bottom: 60px;
+		font-size: 20px;
+	}
+}
+
+.login-form {
+	.form-group {
+		margin-bottom: 24px;
+		input {
+			width: 100%;
+			padding: 16px;
+			border: 2px solid #545F7D26;
+			border-radius: $border-radius;
+			font-size: 14px;
+			font-weight: 400;
+			box-sizing: border-box;
+			font-family: $font-family-login;
+			
+			&:focus {
+				outline: none;
+				border-color: $primary-color;
+			}
+			&::placeholder {
+				color: #545F7D;
+			}
+			
+			&::-webkit-input-placeholder {
+				color: #545F7D;
+			}
+			
+			&::-moz-placeholder {
+				color: #545F7D;
+			}
+		}
+	}
+
+	.login-button {
+		@include button-base;
+		width: 100%;
+		background-color: $primary-color;
+		color: white;
+		padding-block: 15px;
+		font-size: 1rem;
+		margin-top: 30px;
+		text-transform: uppercase;
+		font-weight: 600;
+		letter-spacing: $letter-spacing-wider;
+
+		&:hover {
+			background-color: $primary-hover;
+		}
+	}
+}
+
+.forgot-password {
+	margin-top: 1.5rem;
+	font-weight: 600;
+	letter-spacing: $letter-spacing-wider;;
+	
+	a {
+		color: $primary-color;
+		text-decoration: none;
+		text-transform: uppercase;
+		font-size: 12px;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}

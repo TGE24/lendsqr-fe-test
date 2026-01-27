@@ -1,0 +1,104 @@
+@use '../base/variables' as *;
+@use '../base/mixins' as *;
+
+.users-page {
+	.users-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 2rem;
+
+		h1 {
+			margin: 0;
+		}
+
+		.add-user-button {
+			@include button-base;
+			background-color: $primary-color;
+			color: white;
+
+			&:hover {
+				background-color: $primary-hover;
+			}
+		}
+	}
+}
+
+.users-table-container {
+	background: white;
+	border-radius: 12px;
+	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	overflow-x: auto;
+}
+
+.users-table {
+	width: 100%;
+	border-collapse: collapse;
+
+	thead {
+		background-color: #f8f9fa;
+
+		th {
+			padding: 1rem;
+			text-align: left;
+			font-weight: $font-weight-medium;
+			color: #333;
+			border-bottom: 2px solid #dee2e6;
+		}
+	}
+
+	tbody {
+		tr {
+			border-bottom: 1px solid #dee2e6;
+			@include transition(background-color);
+
+			&:hover {
+				background-color: #f8f9fa;
+			}
+
+			td {
+				padding: 1rem;
+				color: #666;
+			}
+		}
+	}
+
+	.status-badge {
+		display: inline-block;
+		padding: 0.25rem 0.75rem;
+		border-radius: 12px;
+		font-size: 0.875rem;
+		font-weight: $font-weight-medium;
+		text-transform: capitalize;
+
+		&.active {
+			background-color: #d4edda;
+			color: #155724;
+		}
+
+		&.inactive {
+			background-color: #f8d7da;
+			color: #721c24;
+		}
+
+		&.pending {
+			background-color: #fff3cd;
+			color: #856404;
+		}
+
+		&.blacklisted {
+			background-color: #f8d7da;
+			color: #721c24;
+		}
+	}
+
+	.view-details {
+		color: $primary-color;
+		text-decoration: none;
+		font-weight: $font-weight-medium;
+
+		&:hover {
+			text-decoration: underline;
+		}
+	}
+}
