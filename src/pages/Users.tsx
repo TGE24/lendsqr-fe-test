@@ -26,6 +26,7 @@ const Users = () => {
 	const navigate = useNavigate();
 	const [users, setUsers] = useState<User[]>([]);
 	const [loading, setLoading] = useState(true);
+	const [error, setError] = useState<string | null>(null);
 	const [currentPage, setCurrentPage] = useState(1);
 	const [itemsPerPage, setItemsPerPage] = useState(10);
 
@@ -40,18 +41,27 @@ const Users = () => {
 	useEffect(() => {
 		const fetchUsers = async () => {
 			try {
+				setError(null);
 				const response = await fetch(
 					"https://api.json-generator.com/templates/QQIGNxaJTRMv/data",
 					{
 						headers: {
-							Authorization: "Bearer r019ybq4upro027mo5g4m4uznm0y4c3bdh0en2xx",
+							Authorization: `Bearer ${import.meta.env.VITE_ENV_ACCESS_TOKEN}`,
 						},
 					},
 				);
+				if (!response.ok) {
+					throw new Error("Failed to load users. Please try again.");
+				}
 				const data = await response.json();
 				setUsers(data);
 			} catch (error) {
-				// Silently handle error - could add error state here if needed
+				setUsers([]);
+				setError(
+					error instanceof Error
+						? error.message
+						: "Failed to load users. Please try again.",
+				);
 			} finally {
 				setLoading(false);
 			}
@@ -247,6 +257,10 @@ const Users = () => {
 			{loading ? (
 				<div className="loading-container">
 					<p>Loading users...</p>
+				</div>
+			) : error ? (
+				<div className="loading-container">
+					<p>{error}</p>
 				</div>
 			) : (
 				<div className="users-table-container">
