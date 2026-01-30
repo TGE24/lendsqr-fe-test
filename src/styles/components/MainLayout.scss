@@ -9,59 +9,359 @@
 
 .header {
 	background: white;
-	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	box-shadow: 3px 0px 20px 0px #54545414;
 	position: sticky;
 	top: 0;
 	z-index: 100;
 
 	.header-content {
-		max-width: 1440px;
-		margin: 0 auto;
-		padding: 1rem 2rem;
+		padding: 30px 60px;
 		display: flex;
 		align-items: center;
-		justify-content: space-between;
+		gap: 40px;
 
-		.logo {
-			margin: 0;
-			font-size: 1.5rem;
-			color: $primary-color;
-			font-weight: 600;
+		@include tablet {
+			padding: 20px 30px;
+			gap: 20px;
 		}
 
-		.nav {
-			display: flex;
-			gap: 2rem;
+		@include mobile {
+			padding: 15px 20px;
+			gap: 15px;
+		}
 
-			a {
-				color: #666;
-				text-decoration: none;
-				font-weight: $font-weight-medium;
-				padding: 0.5rem 1rem;
-				border-radius: $border-radius;
-				@include transition(all);
+		.hamburger-btn {
+			display: none;
+			background: none;
+			border: none;
+			cursor: pointer;
+			padding: 0;
+			flex-shrink: 0;
 
-				&:hover {
-					color: $primary-color;
-					background-color: rgba(100, 108, 255, 0.1);
-				}
+			@include mobile {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
 
-				&.active {
-					color: $primary-color;
-					background-color: rgba(100, 108, 255, 0.1);
-				}
+			svg {
+				width: 24px;
+				height: 24px;
 			}
 		}
 
-		.logout-button {
-			@include button-base;
-			background: none;
-			border: 1px solid $primary-color;
-			color: $primary-color;
+		.logo {
+			width: 145px;
+			flex-shrink: 0;
 
-			&:hover {
-				background-color: $primary-color;
-				color: white;
+			@include tablet {
+				width: 120px;
+			}
+
+			@include mobile {
+				width: 100px;
+			}
+		}
+
+		.search-bar {
+			display: flex;
+			flex: 1;
+			max-width: 400px;
+			margin-left: 90px;
+
+			@include tablet {
+				margin-left: 30px;
+				max-width: 300px;
+			}
+
+			@include mobile {
+				display: none;
+			}
+
+			.search-input {
+				flex: 1;
+				border: 1px solid #213F7D1A;
+				border-right: none;
+				border-radius: 8px 0 0 8px;
+				padding: 14px 20px;
+				font-size: 14px;
+				outline: none;
+				font-family: $font-family;
+
+				&::placeholder {
+					color: #545F7D;
+					opacity: 0.7;
+				}
+			}
+
+			.search-button {
+				background: $primary-color;
+				border: none;
+				border-radius: 0 8px 8px 0;
+				padding: 14px 20px;
+				cursor: pointer;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+		}
+
+		.header-actions {
+			display: flex;
+			align-items: center;
+			gap: 50px;
+			margin-left: auto;
+
+			@include tablet {
+				gap: 30px;
+			}
+
+			@include mobile {
+				gap: 15px;
+			}
+
+			.docs-link {
+				color: #213F7D;
+				text-decoration: underline;
+				font-size: 16px;
+
+				@include tablet {
+					font-size: 14px;
+				}
+
+				@include mobile {
+					display: none;
+				}
+			}
+
+			.notification-bell {
+				background: none;
+				border: none;
+				cursor: pointer;
+				padding: 0;
+				display: flex;
+				align-items: center;
+
+				svg {
+					@include mobile {
+						width: 20px;
+						height: 20px;
+					}
+				}
+			}
+
+			.user-profile {
+				display: flex;
+				align-items: center;
+				gap: 12px;
+				cursor: pointer;
+
+				@include mobile {
+					gap: 8px;
+				}
+
+				.user-avatar {
+					width: 48px;
+					height: 48px;
+					border-radius: 50%;
+
+					@include tablet {
+						width: 40px;
+						height: 40px;
+					}
+
+					@include mobile {
+						width: 32px;
+						height: 32px;
+					}
+				}
+
+				.user-name {
+					color: #213F7D;
+					font-size: 16px;
+					font-weight: $font-weight-medium;
+
+					@include tablet {
+						font-size: 14px;
+					}
+
+					@include mobile {
+						display: none;
+					}
+				}
+
+				svg {
+					@include mobile {
+						width: 6px;
+						height: 4px;
+					}
+				}
+			}
+		}
+	}
+}
+
+.mobile-menu {
+	position: fixed;
+	top: 0;
+	left: -100%;
+	width: 283px;
+	height: 100vh;
+	background: white;
+	box-shadow: 3px 5px 20px 0px rgba(0, 0, 0, 0.2);
+	overflow-y: auto;
+	z-index: 1000;
+	transition: left 0.3s ease-in-out;
+
+	&.open {
+		left: 0;
+	}
+
+	@include tablet {
+		width: 250px;
+	}
+
+	@media (min-width: 769px) {
+		display: none;
+	}
+
+	.switch-org {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 40px 30px 52px;
+		cursor: pointer;
+		color: #213F7D;
+		font-size: 16px;
+
+		&:hover {
+			opacity: 0.8;
+		}
+
+		span {
+			flex: 1;
+		}
+	}
+
+	.sidebar-nav {
+		.nav-section {
+			margin-bottom: 40px;
+
+			.nav-section-title {
+				font-size: 12px;
+				font-weight: $font-weight-medium;
+				color: #545F7D;
+				padding: 0 30px;
+				margin-bottom: 10px;
+				letter-spacing: 0.1em;
+			}
+
+			.nav-item {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				padding: 15px 30px;
+				color: #213F7D;
+				text-decoration: none;
+				font-size: 16px;
+				@include transition(all);
+				border-left: 3px solid transparent;
+				opacity: 0.6;
+
+				&:hover {
+					background-color: rgba(84, 95, 125, 0.04);
+					opacity: 1;
+				}
+
+				&.active {
+					background-color: rgba(57, 205, 204, 0.06);
+					border-left-color: $primary-color;
+					opacity: 1;
+				}
+
+				span {
+					font-weight: 400;
+				}
+			}
+		}
+	}
+}
+
+.layout-body {
+	display: flex;
+	flex: 1;
+}
+
+.sidebar {
+	width: 283px;
+	background: white;
+	box-shadow: 0px 5px 20px 0px #54545414;
+	overflow-y: auto;
+	height: calc(100vh - 100px);
+	position: sticky;
+	top: 100px;
+
+	@include mobile {
+		display: none;
+	}
+
+	.switch-org {
+		display: flex;
+		align-items: center;
+		gap: 10px;
+		padding: 40px 30px 52px;
+		cursor: pointer;
+		color: #213F7D;
+		font-size: 16px;
+
+		&:hover {
+			opacity: 0.8;
+		}
+
+		span {
+			flex: 1;
+		}
+	}
+
+	.sidebar-nav {
+		.nav-section {
+			margin-bottom: 40px;
+
+			.nav-section-title {
+				font-size: 12px;
+				font-weight: $font-weight-medium;
+				color: #545F7D;
+				padding: 0 30px;
+				margin-bottom: 10px;
+				letter-spacing: 0.1em;
+			}
+
+			.nav-item {
+				display: flex;
+				align-items: center;
+				gap: 10px;
+				padding: 15px 30px;
+				color: #213F7D;
+				text-decoration: none;
+				font-size: 16px;
+				@include transition(all);
+				border-left: 3px solid transparent;
+				opacity: 0.6;
+
+				&:hover {
+					background-color: rgba(84, 95, 125, 0.04);
+					opacity: 1;
+				}
+
+				&.active {
+					background-color: rgba(57, 205, 204, 0.06);
+					border-left-color: $primary-color;
+					opacity: 1;
+				}
+
+				span {
+					font-weight: 400;
+				}
 			}
 		}
 	}
@@ -69,28 +369,20 @@
 
 .main-content {
 	flex: 1;
-	background-color: #f5f5f5;
+	background-color: #fbfbfb;
+	overflow-x: hidden;
 
 	.content-wrapper {
-		max-width: 1440px;
-		margin: 0 auto;
-		padding: 2rem;
-	}
-}
+		padding: 60px;
+		// max-width: 1440px;
 
-@include mobile {
-	.header .header-content {
-		flex-direction: column;
-		gap: 1rem;
+		@include tablet {
+			padding: 30px;
+		}
 
-		.nav {
-			flex-direction: column;
-			width: 100%;
-			gap: 0.5rem;
-
-			a {
-				text-align: center;
-			}
+		@include mobile {
+			padding: 20px;
+			overflow-x: hidden;
 		}
 	}
 }

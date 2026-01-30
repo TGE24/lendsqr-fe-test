@@ -74,7 +74,24 @@
 
 	@include mobile {
 		padding: 2rem;
+		padding-top: 5rem;
+		flex-direction: column;
+		position: relative;
 	}
+
+.login-logo-mobile {
+	display: none;
+
+	@include mobile {
+		display: block;
+		width: 120px;
+		margin-bottom: 0;
+		align-self: flex-start;
+		position: absolute;
+		top: 1.5rem;
+		left: 1.5rem;
+	}
+}
 }
 
 .login-container {

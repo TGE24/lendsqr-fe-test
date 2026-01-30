@@ -1,22 +1,29 @@
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
+import { useState } from "react";
+import UserHighlight from "../assets/user-highlight.svg";
 
 const UserDetails = () => {
 	const { id } = useParams<{ id: string }>();
-	const navigate = useNavigate();
+	const [activeTab, setActiveTab] = useState("general");
+
+	const tabs = [
+		{ value: "general", label: "General Details" },
+		{ value: "documents", label: "Documents" },
+		{ value: "bank", label: "Bank Details" },
+		{ value: "loans", label: "Loans" },
+		{ value: "savings", label: "Savings" },
+		{ value: "system", label: "App and System" },
+	];
 
 	// Mock user data - in a real app, this would be fetched based on the ID
 	const user = {
 		id,
-		name: "John Doe",
-		email: "john.doe@example.com",
-		phoneNumber: "+234 801 234 5678",
-		dateJoined: "May 15, 2023",
-		status: "active",
-		address: "123 Main Street, Lagos, Nigeria",
-		accountNumber: "1234567890",
-		bankName: "Example Bank",
-		bvn: "12345678901",
-		gender: "Male",
+		fullName: "Grace Effiom",
+		username: "Grace Effiom",
+		email: "grace@gmail.com",
+		phoneNumber: "07060780922",
+		bvn: "07060780922",
+		gender: "Female",
 		maritalStatus: "Single",
 		children: "None",
 		typeOfResidence: "Parent's Apartment",
@@ -24,122 +31,236 @@ const UserDetails = () => {
 		employmentStatus: "Employed",
 		sectorOfEmployment: "FinTech",
 		durationOfEmployment: "2 years",
-		officeEmail: "john.doe@company.com",
-		monthlyIncome: "₦200,000 - ₦400,000",
-		loanRepayment: "₦40,000",
+		officeEmail: "grace@lendsqr.com",
+		monthlyIncome: "₦200,000.00 - ₦400,000.00",
+		loanRepayment: "40,000",
+		twitter: "@grace_effiom",
+		facebook: "Grace Effiom",
+		instagram: "@grace_effiom",
+		guarantor: {
+			fullName: "Debby Ogana",
+			phoneNumber: "07060780922",
+			email: "debby@gmail.com",
+			relationship: "Sister",
+		},
+		accountBalance: "₦200,000.00",
+		accountNumber: "9912981731",
+		bank: "Providus Bank",
+		userId: "LSQFf28715",
+		userTier: 1,
 	};
 
 	return (
 		<div className="user-details-page">
-			<button className="back-button" onClick={() => navigate("/users")}>
-				← Back to Users
-			</button>
+			<Link to="/users" className="back-link">
+				<svg width="28" height="10" viewBox="0 0 28 10" fill="none">
+					<path
+						d="M0.94 5.94L4.88 9.88L6.06 8.7L3.62 6.26H28V4.62H3.62L6.06 2.18L4.88 1L0.94 4.94L0 5.88L0.94 5.94Z"
+						fill="#545F7D"
+					/>
+				</svg>
+				Back to Users
+			</Link>
 
-			<div className="user-header">
-				<div className="user-avatar">
-					<span>{user.name.charAt(0)}</span>
-				</div>
-				<div className="user-basic-info">
-					<h1>{user.name}</h1>
-					<p className="user-id">User ID: {user.id}</p>
-				</div>
-				<div className="user-actions">
-					<button className="btn-blacklist">Blacklist User</button>
-					<button className="btn-activate">Activate User</button>
+			<div className="page-header">
+				<h1>User Details</h1>
+				<div className="action-buttons">
+					<button className="btn-blacklist">BLACKLIST USER</button>
+					<button className="btn-activate">ACTIVATE USER</button>
 				</div>
 			</div>
 
-			<div className="details-tabs">
-				<button className="tab active">General Details</button>
-				<button className="tab">Documents</button>
-				<button className="tab">Bank Details</button>
-				<button className="tab">Loans</button>
-				<button className="tab">Savings</button>
+			<div className="user-overview">
+				<div className="user-profile-section">
+					<div className="user-avatar-large">
+						<img src={UserHighlight} alt="User Highlight" />
+					</div>
+					<div className="user-info">
+						<h2>{user.fullName}</h2>
+						<p className="user-id">{user.userId}</p>
+					</div>
+					<div className="user-tier">
+						<p>User's Tier</p>
+						<div className="star-rating">
+							{[1, 2, 3].map((star) => (
+								<svg
+									key={star}
+									width="16"
+									height="16"
+									viewBox="0 0 16 16"
+									fill={star <= user.userTier ? "#E9B200" : "#E9E9E9"}
+								>
+									<path d="M8 0L10.163 5.38L16 6.236L12 10.09L13.09 16L8 13.038L2.91 16L4 10.09L0 6.236L5.837 5.38L8 0Z" />
+								</svg>
+							))}
+						</div>
+					</div>
+					<div className="user-balance">
+						<h3>{user.accountBalance}</h3>
+						<p>
+							{user.accountNumber}/{user.bank}
+						</p>
+					</div>
+				</div>
+
+				<div className="tabs">
+					<select
+						className="tabs-dropdown"
+						value={activeTab}
+						onChange={(e) => setActiveTab(e.target.value)}
+					>
+						{tabs.map((tab) => (
+							<option key={tab.value} value={tab.value}>
+								{tab.label}
+							</option>
+						))}
+					</select>
+
+					<div className="tabs-buttons">
+						{tabs.map((tab) => (
+							<button
+								key={tab.value}
+								className={`tab ${activeTab === tab.value ? "active" : ""}`}
+								onClick={() => setActiveTab(tab.value)}
+							>
+								{tab.label}
+							</button>
+						))}
+					</div>
+				</div>
 			</div>
 
-			<div className="details-content">
-				<section className="details-section">
-					<h2>Personal Information</h2>
-					<div className="details-grid">
-						<div className="detail-item">
-							<span className="label">Full Name</span>
-							<span className="value">{user.name}</span>
+			<div className="user-details-content">
+				<section className="info-section">
+					<h3 className="section-title">Personal Information</h3>
+					<div className="info-grid">
+						<div className="info-item">
+							<p className="label">FULL NAME</p>
+							<p className="value">{user.fullName}</p>
 						</div>
-						<div className="detail-item">
-							<span className="label">Phone Number</span>
-							<span className="value">{user.phoneNumber}</span>
+						<div className="info-item">
+							<p className="label">PHONE NUMBER</p>
+							<p className="value">{user.phoneNumber}</p>
 						</div>
-						<div className="detail-item">
-							<span className="label">Email Address</span>
-							<span className="value">{user.email}</span>
+						<div className="info-item">
+							<p className="label">EMAIL ADDRESS</p>
+							<p className="value">{user.email}</p>
 						</div>
-						<div className="detail-item">
-							<span className="label">BVN</span>
-							<span className="value">{user.bvn}</span>
+						<div className="info-item">
+							<p className="label">BVN</p>
+							<p className="value">{user.bvn}</p>
 						</div>
-						<div className="detail-item">
-							<span className="label">Gender</span>
-							<span className="value">{user.gender}</span>
+						<div className="info-item">
+							<p className="label">GENDER</p>
+							<p className="value">{user.gender}</p>
 						</div>
-						<div className="detail-item">
-							<span className="label">Marital Status</span>
-							<span className="value">{user.maritalStatus}</span>
+						<div className="info-item">
+							<p className="label">MARITAL STATUS</p>
+							<p className="value">{user.maritalStatus}</p>
 						</div>
-						<div className="detail-item">
-							<span className="label">Children</span>
-							<span className="value">{user.children}</span>
+						<div className="info-item">
+							<p className="label">CHILDREN</p>
+							<p className="value">{user.children}</p>
 						</div>
-						<div className="detail-item">
-							<span className="label">Type of Residence</span>
-							<span className="value">{user.typeOfResidence}</span>
+						<div className="info-item">
+							<p className="label">TYPE OF RESIDENCE</p>
+							<p className="value">{user.typeOfResidence}</p>
 						</div>
 					</div>
 				</section>
 
-				<section className="details-section">
-					<h2>Education and Employment</h2>
-					<div className="details-grid">
-						<div className="detail-item">
-							<span className="label">Level of Education</span>
-							<span className="value">{user.levelOfEducation}</span>
+				<section className="info-section">
+					<h3 className="section-title">Education and Employment</h3>
+					<div className="info-grid">
+						<div className="info-item">
+							<p className="label">LEVEL OF EDUCATION</p>
+							<p className="value">{user.levelOfEducation}</p>
 						</div>
-						<div className="detail-item">
-							<span className="label">Employment Status</span>
-							<span className="value">{user.employmentStatus}</span>
+						<div className="info-item">
+							<p className="label">EMPLOYMENT STATUS</p>
+							<p className="value">{user.employmentStatus}</p>
 						</div>
-						<div className="detail-item">
-							<span className="label">Sector of Employment</span>
-							<span className="value">{user.sectorOfEmployment}</span>
+						<div className="info-item">
+							<p className="label">SECTOR OF EMPLOYMENT</p>
+							<p className="value">{user.sectorOfEmployment}</p>
 						</div>
-						<div className="detail-item">
-							<span className="label">Duration of Employment</span>
-							<span className="value">{user.durationOfEmployment}</span>
+						<div className="info-item">
+							<p className="label">DURATION OF EMPLOYMENT</p>
+							<p className="value">{user.durationOfEmployment}</p>
 						</div>
-						<div className="detail-item">
-							<span className="label">Office Email</span>
-							<span className="value">{user.officeEmail}</span>
+						<div className="info-item">
+							<p className="label">OFFICE EMAIL</p>
+							<p className="value">{user.officeEmail}</p>
 						</div>
-						<div className="detail-item">
-							<span className="label">Monthly Income</span>
-							<span className="value">{user.monthlyIncome}</span>
+						<div className="info-item">
+							<p className="label">MONTHLY INCOME</p>
+							<p className="value">{user.monthlyIncome}</p>
 						</div>
-						<div className="detail-item">
-							<span className="label">Loan Repayment</span>
-							<span className="value">{user.loanRepayment}</span>
+						<div className="info-item">
+							<p className="label">LOAN REPAYMENT</p>
+							<p className="value">{user.loanRepayment}</p>
 						</div>
 					</div>
 				</section>
 
-				<section className="details-section">
-					<h2>Bank Details</h2>
-					<div className="details-grid">
-						<div className="detail-item">
-							<span className="label">Account Number</span>
-							<span className="value">{user.accountNumber}</span>
+				<section className="info-section">
+					<h3 className="section-title">Socials</h3>
+					<div className="info-grid">
+						<div className="info-item">
+							<p className="label">TWITTER</p>
+							<p className="value">{user.twitter}</p>
 						</div>
-						<div className="detail-item">
-							<span className="label">Bank Name</span>
-							<span className="value">{user.bankName}</span>
+						<div className="info-item">
+							<p className="label">FACEBOOK</p>
+							<p className="value">{user.facebook}</p>
+						</div>
+						<div className="info-item">
+							<p className="label">INSTAGRAM</p>
+							<p className="value">{user.instagram}</p>
+						</div>
+					</div>
+				</section>
+
+				<section className="info-section">
+					<h3 className="section-title">Guarantor</h3>
+					<div className="info-grid">
+						<div className="info-item">
+							<p className="label">FULL NAME</p>
+							<p className="value">{user.guarantor.fullName}</p>
+						</div>
+						<div className="info-item">
+							<p className="label">PHONE NUMBER</p>
+							<p className="value">{user.guarantor.phoneNumber}</p>
+						</div>
+						<div className="info-item">
+							<p className="label">EMAIL ADDRESS</p>
+							<p className="value">{user.guarantor.email}</p>
+						</div>
+						<div className="info-item">
+							<p className="label">RELATIONSHIP</p>
+							<p className="value">{user.guarantor.relationship}</p>
+						</div>
+					</div>
+				</section>
+
+				<section className="info-section">
+					<h3 className="section-title"></h3>
+					<div className="info-grid">
+						<div className="info-item">
+							<p className="label">FULL NAME</p>
+							<p className="value">{user.guarantor.fullName}</p>
+						</div>
+						<div className="info-item">
+							<p className="label">PHONE NUMBER</p>
+							<p className="value">{user.guarantor.phoneNumber}</p>
+						</div>
+						<div className="info-item">
+							<p className="label">EMAIL ADDRESS</p>
+							<p className="value">{user.guarantor.email}</p>
+						</div>
+						<div className="info-item">
+							<p className="label">RELATIONSHIP</p>
+							<p className="value">{user.guarantor.relationship}</p>
 						</div>
 					</div>
 				</section>

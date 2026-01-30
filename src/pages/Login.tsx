@@ -10,10 +10,8 @@ const Login = () => {
 
 	const handleSubmit = (e: React.FormEvent) => {
 		e.preventDefault();
-		// Add authentication logic here
-		console.log("Login attempt:", { email, password });
-		// Navigate to dashboard after successful login
-		navigate("/dashboard");
+		// Navigate to users page after successful login
+		navigate("/users");
 	};
 
 	return (
@@ -27,6 +25,7 @@ const Login = () => {
 				/>
 			</div>
 			<div className="login-right">
+				<img src={Logo} alt="Company Logo" className="login-logo-mobile" />
 				<div className="login-container">
 					<h1>Welcome.</h1>
 					<p className="login-subtitle">Enter details to login.</p>
