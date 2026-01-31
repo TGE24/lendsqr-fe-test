@@ -1,11 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import loginImage from "../assets/login-image.svg";
+import loginImage from "../assets/login-image.png";
 import Logo from "../assets/Logo.svg";
 
 const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [showPassword, setShowPassword] = useState(false);
 	const navigate = useNavigate();
 
 	const handleSubmit = (e: React.FormEvent) => {
@@ -42,15 +43,23 @@ const Login = () => {
 							/>
 						</div>
 
-						<div className="form-group">
+						<div className="form-group password-group">
 							<input
-								type="password"
+								type={showPassword ? "text" : "password"}
 								id="password"
 								value={password}
 								onChange={(e) => setPassword(e.target.value)}
 								placeholder="Password"
 								required
 							/>
+							<button
+								type="button"
+								className="toggle-password"
+								onClick={() => setShowPassword((prev) => !prev)}
+								aria-label={showPassword ? "Hide password" : "Show password"}
+							>
+								{showPassword ? "HIDE" : "SHOW"}
+							</button>
 						</div>
 
 						<p className="forgot-password">

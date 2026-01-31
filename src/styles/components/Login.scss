@@ -117,6 +117,7 @@
 .login-form {
 	.form-group {
 		margin-bottom: 24px;
+		position: relative;
 		input {
 			width: 100%;
 			padding: 16px;
@@ -142,6 +143,27 @@
 			&::-moz-placeholder {
 				color: #545F7D;
 			}
+		}
+	}
+
+	.password-group {
+		input {
+			padding-right: 72px;
+		}
+
+		.toggle-password {
+			position: absolute;
+			top: 50%;
+			right: 16px;
+			transform: translateY(-50%);
+			background: transparent;
+			border: none;
+			color: $primary-color;
+			font-size: 12px;
+			font-weight: 600;
+			letter-spacing: $letter-spacing-wider;
+			cursor: pointer;
+			padding: 0;
 		}
 	}
 
